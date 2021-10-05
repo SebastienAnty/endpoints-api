@@ -26,7 +26,7 @@ exports.getProductById = (req, res) => {
 }
 
 // createProduct
-exports.createProduct = (req, res => {
+exports.createProduct = (req, res) => {
     if(!req.body.sku || !req.body.price || !req.body.type) {
         res.status(401).send({message : "Invalid request"})
         return
@@ -48,7 +48,20 @@ exports.createProduct = (req, res => {
     db.collection("clothes").add(req.body)
     .then(docRef => res.status(201).send({ id: docRef.id}))
     .catch(err => res.status(500).send(err))
-})
+}
 // updateProduct 
-
+exports.updateProduct = (req, res) => {
+    const { productId } = req.params
+    const db = connectDb() 
+    db.collection("clothes").doc(productId).update(req.body)
+        .then(() => res.status(202).send({ message: "updated"}))
+        .catch(err => res.status(500).send(err))
+}
 // deleteProduct
+exports.deleteProduct = (req, res) => {
+    const { productId } = req.params
+    const db = connectDb()
+    db.collection("clothes").doc(productId).delete()
+    .then(() => res.status(202).send({ message : "deleted "}))
+    .catch(err => res.status(500).send(err))
+}
