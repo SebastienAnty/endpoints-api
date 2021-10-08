@@ -49,7 +49,6 @@ exports.createProduct = (req, res) => {
     .then(docRef => res.status(201).send({ id: docRef.id}))
     .catch(err => res.status(500).send(err))
 }
-// updateProduct 
 exports.updateProduct = (req, res) => {
     const { productId } = req.params
     const db = connectDb() 
@@ -57,7 +56,6 @@ exports.updateProduct = (req, res) => {
         .then(() => res.status(202).send({ message: "updated"}))
         .catch(err => res.status(500).send(err))
 }
-// deleteProduct
 exports.deleteProduct = (req, res) => {
     const { productId } = req.params
     const db = connectDb()
